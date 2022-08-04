@@ -11,14 +11,14 @@ from pyrogram import Client, __version__, enums
 from pyrogram.raw.all import layer
 from database.ia_filterdb import Media
 from database.users_chats_db import db
-from info import SESSION, API_ID, API_HASH, BOT_TOKEN, dispatcher, LOG_STR
+from info import SESSION, API_ID, API_HASH, BOT_TOKEN, LOG_STR
 from utils import temp
 
 class Bot(Client):
 
     def __init__(self):
         super().__init__(
-            name=SESSION,
+            session_name=SESSION,
             api_id=API_ID,
             api_hash=API_HASH,
             bot_token=BOT_TOKEN,
@@ -33,7 +33,6 @@ class Bot(Client):
         temp.BANNED_CHATS = b_chats
         await super().start()
         await Media.ensure_indexes()
-        self.set_parse_mode(enums.ParseMode.DEFAULT)
         me = await self.get_me()
         temp.ME = me.id
         temp.U_NAME = me.username
